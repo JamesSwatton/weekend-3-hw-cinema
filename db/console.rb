@@ -25,8 +25,8 @@ film1.save()
 film2.save()
 film3.save()
 
-film1.title = 'Phantom Thread'
-film1.update()
+# film1.title = 'Phantom Thread'
+# film1.update()
 
 ticket1 = Ticket.new( {'customer_id' => customer1.id, 'film_id' => film3.id} )
 ticket2 = Ticket.new( {'customer_id' => customer2.id, 'film_id' => film3.id} )
@@ -36,6 +36,9 @@ ticket4 = Ticket.new( {'customer_id' => customer1.id, 'film_id' => film1.id} )
 ticket1.save()
 ticket2.save()
 ticket3.save()
+# ticket4.save()
 
+# p customer1.films()
+p film3.customers()
 
-customer1.delete()
+# customer1.delete()
