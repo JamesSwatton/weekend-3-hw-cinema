@@ -1,4 +1,8 @@
+require('pry')
+
 require_relative('../db/sql_runner')
+require_relative('./ticket')
+
 
 class Customer
 
@@ -42,6 +46,26 @@ class Customer
     values = [@id]
     films = SqlRunner.run(sql, values)
     return Film.map_items(films)
+  end
+
+  def can_afford_film(film)
+    return @funds >= film.price
+  end
+
+  def buy_ticket(film)
+    if can_afford_film(film)
+      @funds -= film.price
+      ticket = Ticket.new( {'customer_id' => @id, 'film_id' => film.id} )
+      ticket.save()
+    end
+  end
+
+  def num_of_tickets()
+    sql = "SELECT * FROM tickets
+          WHERE customer_id = $1;"
+    values = [@id]
+    tickets = SqlRunner.run(sql, values)
+    return tickets.count
   end
 
   def self.delete_all()

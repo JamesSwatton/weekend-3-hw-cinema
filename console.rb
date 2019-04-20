@@ -1,6 +1,6 @@
-require_relative('../models/customer')
-require_relative('../models/film')
-require_relative('../models/ticket')
+require_relative('./models/customer')
+require_relative('./models/film')
+require_relative('./models/ticket')
 
 Film.delete_all()
 Customer.delete_all()
@@ -31,7 +31,7 @@ film3.save()
 ticket1 = Ticket.new( {'customer_id' => customer1.id, 'film_id' => film3.id} )
 ticket2 = Ticket.new( {'customer_id' => customer2.id, 'film_id' => film3.id} )
 ticket3 = Ticket.new( {'customer_id' => customer3.id, 'film_id' => film1.id} )
-ticket4 = Ticket.new( {'customer_id' => customer1.id, 'film_id' => film1.id} )
+# ticket4 = Ticket.new( {'customer_id' => customer1.id, 'film_id' => film1.id} )
 
 ticket1.save()
 ticket2.save()
@@ -40,5 +40,10 @@ ticket3.save()
 
 # p customer1.films()
 p film3.customers()
-
 # customer1.delete()
+
+customer1.buy_ticket(film2)
+
+# p customer1.num_of_tickets()
+
+p film3.num_of_customers()

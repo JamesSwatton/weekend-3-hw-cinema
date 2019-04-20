@@ -40,6 +40,10 @@ class Film
     return Customer.map_items(customers)
   end
 
+  def num_of_customers()
+    return customers().count
+  end
+
   def self.delete_all()
     sql = "DELETE FROM films;"
     SqlRunner.run(sql)
