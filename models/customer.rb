@@ -52,11 +52,14 @@ class Customer
     return @funds >= film.price
   end
 
-  def buy_ticket(film)
-    if can_afford_film(film)
+  def buy_ticket(film, screening)
+    if can_afford_film(film) && film.id == screening.film_id
       @funds -= film.price
-      ticket = Ticket.new( {'customer_id' => @id, 'film_id' => film.id} )
+      ticket = Ticket.new( {'customer_id' => @id, 'film_id' => film.id, 'screening_id' => screening.id} )
       ticket.save()
+      return "booking made"
+    else
+      return "film show time does not exist. choose another screening"
     end
   end
 

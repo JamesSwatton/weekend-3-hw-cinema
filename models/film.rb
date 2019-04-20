@@ -44,6 +44,20 @@ class Film
     return customers().count
   end
 
+  def most_popular_screening()
+    sql = "SELECT show_time
+          FROM screenings
+          INNER JOIN tickets
+          ON screenings.id = tickets.screening_id
+          WHERE screenings.film_id = $1;"
+    values = [@id]
+    screenings = Screening.map_items(SqlRunner.run(sql, values))
+    show_times = screenings.map { |screening| screening.show_time }
+    uniq_times = show_times.uniq
+    return uniq_times.sort_by { |time| show_times.count(time) }.pop
+  end
+
+
   def self.delete_all()
     sql = "DELETE FROM films;"
     SqlRunner.run(sql)

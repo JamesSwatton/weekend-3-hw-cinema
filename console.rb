@@ -29,9 +29,17 @@ film3.save()
 # film1.title = 'Phantom Thread'
 # film1.update()
 
-ticket1 = Ticket.new( {'customer_id' => customer1.id, 'film_id' => film3.id} )
-ticket2 = Ticket.new( {'customer_id' => customer2.id, 'film_id' => film3.id} )
-ticket3 = Ticket.new( {'customer_id' => customer3.id, 'film_id' => film1.id} )
+screening1 = Screening.new( {'film_id' => film1.id, 'show_time' => '18:00'})
+screening2 = Screening.new( {'film_id' => film3.id, 'show_time' => '21:00'})
+screening3 = Screening.new( {'film_id' => film3.id, 'show_time' => '23:00'})
+
+screening1.save()
+screening2.save()
+screening3.save()
+
+ticket1 = Ticket.new( {'customer_id' => customer1.id, 'film_id' => film3.id, 'screening_id' => screening2.id} )
+ticket2 = Ticket.new( {'customer_id' => customer2.id, 'film_id' => film3.id, 'screening_id' => screening2.id} )
+ticket3 = Ticket.new( {'customer_id' => customer3.id, 'film_id' => film1.id, 'screening_id' => screening1.id} )
 # ticket4 = Ticket.new( {'customer_id' => customer1.id, 'film_id' => film1.id} )
 
 ticket1.save()
@@ -43,14 +51,10 @@ ticket3.save()
 # p film3.customers()
 # customer1.delete()
 
-# customer1.buy_ticket(film2)
+customer1.buy_ticket(film3, screening3)
+
+p film3.most_popular_screening()
 
 # p customer1.num_of_tickets()
 
 # p film3.num_of_customers()
-
-screening1 = Screening.new( {'film_id' => film1.id, 'show_time' => '18:00'})
-screening2 = Screening.new( {'film_id' => film3.id, 'show_time' => '21:00'})
-
-screening1.save()
-screening2.save()

@@ -16,4 +16,7 @@ class Screening
     @id = screenings.first['id'].to_i
   end
 
+  def self.map_items(screening_data)
+    results = screening_data.map { |screening| Screening.new(screening) }
+  end
 end
