@@ -30,7 +30,7 @@ film3.save()
 # film1.update()
 
 screening1 = Screening.new( {'film_id' => film1.id, 'show_time' => '18:00', 'capacity' => 5})
-screening2 = Screening.new( {'film_id' => film3.id, 'show_time' => '21:00', 'capacity' => 5})
+screening2 = Screening.new( {'film_id' => film3.id, 'show_time' => '21:00', 'capacity' => 2})
 screening3 = Screening.new( {'film_id' => film3.id, 'show_time' => '23:00', 'capacity' => 5})
 
 screening1.save()
@@ -39,7 +39,7 @@ screening3.save()
 
 ticket1 = Ticket.new( {'customer_id' => customer1.id, 'film_id' => film3.id, 'screening_id' => screening2.id} )
 ticket2 = Ticket.new( {'customer_id' => customer2.id, 'film_id' => film3.id, 'screening_id' => screening2.id} )
-ticket3 = Ticket.new( {'customer_id' => customer3.id, 'film_id' => film1.id, 'screening_id' => screening1.id} )
+ticket3 = Ticket.new( {'customer_id' => customer3.id, 'film_id' => film3.id, 'screening_id' => screening2.id} )
 # ticket4 = Ticket.new( {'customer_id' => customer1.id, 'film_id' => film1.id} )
 
 ticket1.save()
@@ -51,8 +51,10 @@ ticket3.save()
 # p film3.customers()
 # customer1.delete()
 
-p customer1.buy_ticket(film3, screening3)
+# p customer1.buy_ticket(film3, screening3)
 
+p screening2.has_available_seats?()
+p screening2.num_of_available_seats()
 
 # p film3.most_popular_screening()
 

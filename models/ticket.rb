@@ -13,6 +13,7 @@ class Ticket
   end
 
   def save()
+    return if !has_available_seats?()
     sql = "INSERT INTO tickets (customer_id, film_id, screening_id) VALUES ($1, $2, $3)
     RETURNING id;"
     values = [@customer_id, @film_id, @screening_id]
@@ -30,6 +31,23 @@ class Ticket
     sql = "DELETE FROM tickets WHERE id = $1;"
     values = [@id]
     SqlRunner.run(sql, values)
+  end
+
+  def has_available_seats?()
+    # find all tickets for screening
+    sql1 = "SELECT *
+           FROM tickets
+           WHERE screening_id = $1;"
+    values = [@screening_id]
+    num_of_tickets_sold = SqlRunner.run(sql1, values)
+
+    # find capacity for screening
+    sql2 = "SELECT capacity
+           FROM screenings
+           WHERE id = $1"
+    values = [@screening_id]
+    capacity = SqlRunner.run(sql2, values)[0]['capacity'].to_i
+    return num_of_tickets_sold.count < capacity
   end
 
   def self.delete_all()

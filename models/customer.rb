@@ -48,23 +48,21 @@ class Customer
     return Film.map_items(films)
   end
 
-  def can_afford_film(film)
+  def can_afford_film?(film)
     return @funds >= film.price
   end
 
   def buy_ticket(film, screening)
-    if !can_afford_film(film)
+    if !can_afford_film?(film)
       return "insufficient funds"
     elsif film.id != screening.film_id
       return "film show time does not exist. choose another screening"
-    elsif screening.available_seats == 0
+    elsif !screening.has_available_seats
       return "sorry, no seats available"
     else
       @funds -= film.price
       ticket = Ticket.new( {'customer_id' => @id, 'film_id' => film.id, 'screening_id' => screening.id} )
       ticket.save()
-      screening.available_seats -= 1
-      screening.update()
     end
   end
 
