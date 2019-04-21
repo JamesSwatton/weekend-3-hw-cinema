@@ -53,13 +53,18 @@ class Customer
   end
 
   def buy_ticket(film, screening)
-    if can_afford_film(film) && film.id == screening.film_id
+    if !can_afford_film(film)
+      return "insufficient funds"
+    elsif film.id != screening.film_id
+      return "film show time does not exist. choose another screening"
+    elsif screening.available_seats == 0
+      return "sorry, no seats available"
+    else
       @funds -= film.price
       ticket = Ticket.new( {'customer_id' => @id, 'film_id' => film.id, 'screening_id' => screening.id} )
       ticket.save()
-      return "booking made"
-    else
-      return "film show time does not exist. choose another screening"
+      screening.available_seats -= 1
+      screening.update()
     end
   end
 
